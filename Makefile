@@ -35,8 +35,7 @@ build: ## build go library
 
 .PHONY: run
 run: ## run tests.py
-	. .venv/bin/activate
-	python tests.py
+	. .venv/bin/activate && python tests.py
 
 
 .PHONY: help
