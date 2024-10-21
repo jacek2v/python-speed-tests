@@ -37,7 +37,6 @@ def python_bench():
 
 
 def javascript_bench():
-    # var QUOTAS = Array.from(new Array(100_000_000),(val,index)=> index );
     js_func1 = """
     var main = function(QUOTAS, max_number) {
         total = 0;
@@ -54,7 +53,22 @@ def javascript_bench():
     end = time.time() - start
     print(f"js loop   time: {end:5f}s result: {result}")
 
-    # var QUOTAS = Array.from(new Array(100_000_000),(val,index)=> index );
+    js_func1l = f"var QUOTAS = Array.from(new Array({N}),(val,index)=> index );"
+    js_func1l += """
+    var main = function(max_number) {
+        total = 0;
+        for (var i = 0; i < max_number; i++) {
+            total = total + QUOTAS[i];
+        }
+        return total;
+    }
+    """
+    ctx.eval(js_func1l)
+    start = time.time()
+    result = ctx.call("main", N)
+    end = time.time() - start
+    print(f"js loop   time: {end:5f}s result: {result} - local JS array")
+
     js_func2 = """
     var main = function(QUOTAS, max_number) {
         const total = QUOTAS.reduce((partialSum, a) => partialSum + a, 0);
@@ -67,6 +81,20 @@ def javascript_bench():
     result = ctx.call("main", quotas, N)
     end = time.time() - start
     print(f"js reduce time: {end:5f}s result: {result}")
+
+    js_func2l = f"var QUOTAS = Array.from(new Array({N}),(val,index)=> index );"
+    js_func2l += """
+    var main = function(max_number) {
+        const total = QUOTAS.reduce((partialSum, a) => partialSum + a, 0);
+        return total;
+    }
+    """
+
+    ctx.eval(js_func2l)
+    start = time.time()
+    result = ctx.call("main", N)
+    end = time.time() - start
+    print(f"js reduce time: {end:5f}s result: {result} - local JS array")
 
 
 import ctypes  # noqa: E402
