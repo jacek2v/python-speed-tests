@@ -11,8 +11,9 @@ build: ## build go library
 	go build  -buildmode=c-shared -o out/library.so library.go
 
 .PHONY: run
-run: ## run use.py
-	python reduce.py
+run: ## run tests.py
+	. .venv/bin/activate
+	python tests.py
 
 
 .PHONY: help
