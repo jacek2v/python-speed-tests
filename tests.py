@@ -116,7 +116,25 @@ def go_bench():
     print(f"go loop   time: {end:5f}s result: {result}")
 
 
+library_v = ctypes.cdll.LoadLibrary("./out/library_v.so")
+
+
+def v_bench():
+    loop_quotas = library_v.loop_quotas
+    array_arg_type = ctypes.POINTER(ctypes.c_int64)
+    loop_quotas.argtypes = [array_arg_type, ctypes.c_int]
+    loop_quotas.restype = ctypes.c_int64
+    array_tmp = array.array("q", quotas)
+    array_arg = array_arg_type((ctypes.c_int64 * len(quotas)).from_buffer(array_tmp))
+
+    start = time.time()
+    result = loop_quotas(array_arg, N)
+    end = time.time() - start
+    print(f" v loop   time: {end:5f}s result: {result}")
+
+
 if __name__ == "__main__":
     python_bench()
     javascript_bench()
     go_bench()
+    v_bench()

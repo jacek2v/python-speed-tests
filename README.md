@@ -6,6 +6,7 @@ Simple Python speed tests
 - uv package installed in system (python pip install uv)
 - make
 - golang > 1.22
+- v lang
 
 ## prepare environment
 make prepare_env

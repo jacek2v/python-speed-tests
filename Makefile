@@ -32,6 +32,7 @@ clean: ## clean
 .PHONY: build
 build: ## build go library
 	go build  -buildmode=c-shared -o out/library.so library.go
+	v -cc gcc -shared library_v.v -o out/library_v.so
 
 .PHONY: run
 run: ## run tests.py
