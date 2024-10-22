@@ -18,6 +18,7 @@ fn loop_quotas(quotas_p &i64, n i64) i64 {
         if i >= n {
             break
         }
+        total += i
     }
 
 	return total
