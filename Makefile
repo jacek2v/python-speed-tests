@@ -23,7 +23,8 @@ prepare_env313: ## prepare env python 3.13
 	python -m venv .venv
 	pyenv local --unset
 	. .venv/bin/activate
-	uv pip install mini-racer ruff
+	uv pip install mini-racer ruff nimporter setuptools
+
 
 .PHONY: clean
 clean: ## clean
@@ -33,6 +34,8 @@ clean: ## clean
 build: ## build go library
 	go build  -buildmode=c-shared -o out/library.so library.go
 	v -cc gcc -shared library_v.v -o out/library_v.so
+# nim compile library_nim.nim
+# -d:release 
 
 .PHONY: run
 run: ## run tests.py

@@ -132,9 +132,19 @@ def v_bench():
     end = time.time() - start
     print(f" v loop   time: {end:5f}s result: {result}")
 
+import nimporter  # noqa: E402, F401
+import library_nim  # type: ignore # noqa: E402
+
+def nim_bench():
+    loop_quotas = library_nim.loop_quotas
+    start = time.time()
+    result = loop_quotas(quotas, N)
+    end = time.time() - start
+    print(f"nim loop  time: {end:5f}s result: {result}")
 
 if __name__ == "__main__":
     python_bench()
     javascript_bench()
     go_bench()
     v_bench()
+    nim_bench()
